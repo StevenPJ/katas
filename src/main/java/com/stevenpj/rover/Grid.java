@@ -7,10 +7,12 @@ import lombok.Getter;
 @AllArgsConstructor
 public class Grid {
 
+    private int x;
+    private int y;
     private String heading;
 
     public String getPosition() {
-        return "0:0:N";
+        return String.format("%d:%d:%s", x, y, heading);
     }
 
     public void turnRight() {
@@ -48,6 +50,19 @@ public class Grid {
     }
 
     public void moveForward() {
-        throw new UnsupportedOperationException();
+        switch (heading) {
+            case "N":
+                y += 1;
+                break;
+            case "W":
+                x -= 1;
+                break;
+            case "S":
+                y -= 1;
+                break;
+            case "E":
+                x += 1;
+                break;
+        }
     }
 }
