@@ -1,9 +1,6 @@
-package rover
+package com.stevenpj.rover
 
-import com.stevenpj.rover.Coordinate
-import com.stevenpj.rover.Grid
-import com.stevenpj.rover.Heading
-import com.stevenpj.rover.Rover
+
 import spock.lang.Specification
 
 class RoverAcceptanceSpec extends Specification {
@@ -19,5 +16,10 @@ class RoverAcceptanceSpec extends Specification {
     def "should wrap rover back to start of grid"() {
         expect:
         rover.execute("MMMMMMMMMM") == "0:0:N"
+    }
+
+    def "should halt at obstacle"() {
+        expect:
+        rover.execute("MMMM") == "O:0:2:N"
     }
 }

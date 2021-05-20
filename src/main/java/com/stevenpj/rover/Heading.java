@@ -2,7 +2,7 @@ package com.stevenpj.rover;
 
 import lombok.EqualsAndHashCode;
 
-public interface Heading {
+interface Heading {
     Heading toTheRight();
 
     Heading toTheLeft();

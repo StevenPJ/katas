@@ -1,7 +1,6 @@
-package rover
+package com.stevenpj.rover
 
-import com.stevenpj.rover.Grid
-import com.stevenpj.rover.Rover
+
 import spock.lang.Specification
 
 class RoverSpec extends Specification {

@@ -1,8 +1,6 @@
-package rover
+package com.stevenpj.rover
 
-import com.stevenpj.rover.Coordinate
-import com.stevenpj.rover.Grid
-import com.stevenpj.rover.Heading
+
 import spock.lang.Specification
 import spock.lang.Unroll
 
@@ -90,6 +88,29 @@ class GridSpec extends Specification {
         9 | 0 | EAST    | "0:0:E"
         0 | 0 | SOUTH   | "0:9:S"
         0 | 0 | WEST    | "9:0:W"
+    }
+
+    def "should stop at next obstacle"() {
+        given: "a grid with obstacle at next coordinate"
+        def obstacles = Mock(Obstacles) {
+            hasObstacleAt(NORTH.getNext(Coordinate.atOrigin())) >> true
+            decoratePosition("0:0:N") >> "O:0:0:N"
+            haveBeenHit() >> true
+        }
+        def grid = new Grid(Coordinate.atOrigin(), NORTH, obstacles)
+
+        when: "the rover moves forward"
+        grid.moveForward()
+
+        then: "it hits the obstacle and reports its position"
+        grid.getPosition() == "O:0:0:N"
+
+        when: "the rover tries to turn"
+        grid.turnRight()
+
+        then: "it still reports the position where it hit the obstacle"
+        grid.getPosition() == "O:0:0:N"
+        
     }
 
     static final Heading NORTH = new Heading.North()

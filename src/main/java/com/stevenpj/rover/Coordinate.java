@@ -3,7 +3,7 @@ package com.stevenpj.rover;
 import lombok.Value;
 
 @Value
-public class Coordinate {
+class Coordinate {
     int x;
     int y;
 
