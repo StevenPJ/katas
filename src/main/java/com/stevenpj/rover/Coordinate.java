@@ -1,8 +1,10 @@
 package com.stevenpj.rover;
 
+import lombok.EqualsAndHashCode;
 import lombok.Value;
 
 @Value
+@EqualsAndHashCode
 class Coordinate {
     int x;
     int y;

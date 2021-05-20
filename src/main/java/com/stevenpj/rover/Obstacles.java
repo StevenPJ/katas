@@ -1,22 +1,23 @@
 package com.stevenpj.rover;
 
+import java.util.ArrayList;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 class Obstacles {
 
-    private final Coordinate coordinate;
+    private final List<Coordinate> coordinates;
+
+    public static Obstacles empty() {
+        return new Obstacles(new ArrayList<>());
+    }
 
     boolean hasObstacleAt(Coordinate coordinate) {
-        return coordinate.equals(this.coordinate);
+        return this.coordinates.contains(coordinate);
     }
 
     String decoratePosition(String position) {
-        return position;
+        return "O:" + position;
     }
-
-    boolean haveBeenHit() {
-        return false;
-    }
-
 }

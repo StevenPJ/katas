@@ -90,26 +90,17 @@ class GridSpec extends Specification {
         0 | 0 | WEST    | "9:0:W"
     }
 
-    def "should stop at next obstacle"() {
-        given: "a grid with obstacle at next coordinate"
+    def "should return true when an obstacle will be hit"() {
+        given: "a grid with an obstacle at the next coordinate"
+        def startingCoordinate = Coordinate.atOrigin()
+        def nextCoordinate = NORTH.getNext(startingCoordinate)
         def obstacles = Mock(Obstacles) {
-            hasObstacleAt(NORTH.getNext(Coordinate.atOrigin())) >> true
-            decoratePosition("0:0:N") >> "O:0:0:N"
-            haveBeenHit() >> true
+            hasObstacleAt(nextCoordinate) >> true
         }
-        def grid = new Grid(Coordinate.atOrigin(), NORTH, obstacles)
+        def grid = new Grid(startingCoordinate, NORTH, obstacles)
 
-        when: "the rover moves forward"
-        grid.moveForward()
-
-        then: "it hits the obstacle and reports its position"
-        grid.getPosition() == "O:0:0:N"
-
-        when: "the rover tries to turn"
-        grid.turnRight()
-
-        then: "it still reports the position where it hit the obstacle"
-        grid.getPosition() == "O:0:0:N"
+        expect: "it will hit an obstacle"
+        grid.willHitObstacle()
     }
 
     static final Heading NORTH = new Heading.North()

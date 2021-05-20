@@ -28,6 +28,7 @@ class RoverSpec extends Specification {
 
         then:
         3 * grid.turnLeft()
+        1 * grid.getPosition()
     }
 
     def "should move forward on the grid"() {
@@ -36,5 +37,28 @@ class RoverSpec extends Specification {
 
         then:
         3 * grid.moveForward()
+        1 * grid.getPosition()
+    }
+
+    def "should stop once an obstacle is hit"() {
+        when: "the rover hits the obstacle at the end"
+        rover.execute("RLMM")
+
+        then:  "the rover turned right"
+        1 * grid.turnRight()
+
+        then: "the rover turned left"
+        1 * grid.turnLeft()
+
+        then: "the rover moved forwards after checking for obstacles"
+        1 * grid.willHitObstacle() >> false
+        1 * grid.moveForward()
+
+        then: "the rover reported the obstacle"
+        1 * grid.willHitObstacle() >> true
+        1 * grid.reportObstacle()
+
+        then: "no more interactions"
+        0 * _
     }
 }

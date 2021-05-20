@@ -5,6 +5,7 @@ import spock.lang.Specification
 
 class RoverAcceptanceSpec extends Specification {
 
+    Obstacles three_one = new Obstacles([new Coordinate(0, 3)])
     Grid AT_ORIGIN_FACING_NORTH = new Grid(Coordinate.atOrigin(), new Heading.North())
     Rover rover = new Rover(AT_ORIGIN_FACING_NORTH)
 
@@ -19,7 +20,12 @@ class RoverAcceptanceSpec extends Specification {
     }
 
     def "should halt at obstacle"() {
-        expect:
+        given: "a grid with obstacle at 0,3"
+        Obstacles zero_three = new Obstacles([new Coordinate(0, 3)])
+        Grid AT_ORIGIN_FACING_NORTH_WITH_OBSTACLE = new Grid(Coordinate.atOrigin(), new Heading.North(), zero_three)
+        Rover rover = new Rover(AT_ORIGIN_FACING_NORTH_WITH_OBSTACLE)
+
+        expect: "rover to report obstacle"
         rover.execute("MMMM") == "O:0:2:N"
     }
 }

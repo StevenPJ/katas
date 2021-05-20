@@ -18,28 +18,31 @@ class Grid {
     public Grid(Coordinate coordinate, Heading heading) {
         this.coordinate = coordinate;
         this.heading = heading;
-        this.obstacles = new Obstacles(null);
+        this.obstacles = Obstacles.empty();
     }
 
     public String getPosition() {
-        String position = String.format("%d:%d:%s", coordinate.getX(), coordinate.getY(), heading.toChar());
-        return obstacles.decoratePosition(position);
+        return String.format("%d:%d:%s", coordinate.getX(), coordinate.getY(), heading.toChar());
     }
 
     public void turnRight() {
-        if (obstacles.haveBeenHit()) return;
         heading = heading.toTheRight();
     }
 
     public void turnLeft() {
-        if (obstacles.haveBeenHit()) return;
         heading = heading.toTheLeft();
     }
 
     public void moveForward() {
-        Coordinate nextCoordinate = heading.getNext(coordinate);
-        if (obstacles.hasObstacleAt(nextCoordinate)) return;
-        coordinate = nextCoordinate;
+        coordinate = heading.getNext(coordinate);
+    }
+
+    public boolean willHitObstacle() {
+        return obstacles.hasObstacleAt(heading.getNext(coordinate));
+    }
+
+    public String reportObstacle() {
+        return obstacles.decoratePosition(this.getPosition());
     }
 }
 
