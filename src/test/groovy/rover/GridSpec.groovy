@@ -55,11 +55,11 @@ class GridSpec extends Specification {
     }
 
     @Unroll
-    def "should move to #finalPosition when starting facing #initialHeadingtoChar()"() {
+    def "should move to #finalPosition when starting facing #initialHeading.toChar()"() {
         given: "an initial heading of #headingtoChar() at 0,0"
         def grid = new Grid(Coordinate.atOrigin(), initialHeading)
 
-        when: "the rover turns right"
+        when: "the rover moves forward"
         grid.moveForward()
 
         then: "the rover should be in #finalPosition"
@@ -68,9 +68,28 @@ class GridSpec extends Specification {
         where:
         initialHeading | finalPosition
         NORTH          | "0:1:N"
-        WEST           | "-1:0:W"
-        SOUTH          | "0:-1:S"
+        WEST           | "9:0:W"
+        SOUTH          | "0:9:S"
         EAST           | "1:0:E"
+    }
+
+    @Unroll
+    def "should wrap back to start of grid"() {
+        given: "an initial position of #x:#y:#heading"
+        def grid = new Grid(new Coordinate(x, y), heading)
+
+        when: "the rover moves forward"
+        grid.moveForward()
+
+        then: "the rover should be in #wrappedPosition"
+        grid.getPosition() == wrappedPosition
+
+        where:
+        x | y | heading | wrappedPosition
+        0 | 9 | NORTH   | "0:0:N"
+        9 | 0 | EAST    | "0:0:E"
+        0 | 0 | SOUTH   | "0:9:S"
+        0 | 0 | WEST    | "9:0:W"
     }
 
     static final Heading NORTH = new Heading.North()
