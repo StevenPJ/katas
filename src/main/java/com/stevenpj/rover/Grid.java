@@ -31,7 +31,20 @@ public class Grid {
     }
 
     public void turnLeft() {
-        throw new UnsupportedOperationException();
+        switch (heading) {
+            case "N":
+                heading = "W";
+                break;
+            case "W":
+                heading = "S";
+                break;
+            case "S":
+                heading = "E";
+                break;
+            case "E":
+                heading = "N";
+                break;
+        }
     }
 
     public void moveForward() {

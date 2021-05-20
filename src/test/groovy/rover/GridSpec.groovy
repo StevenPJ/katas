@@ -32,4 +32,23 @@ class GridSpec extends Specification {
         "S"            | "W"
         "W"            | "N"
     }
+
+    @Unroll
+    def "should rotate left from #initialHeading to #finalHeading"() {
+        given: "an initial heading of #heading"
+        def grid = new Grid(initialHeading)
+
+        when: "the rover turns left"
+        grid.turnLeft()
+
+        then: "the rover should be heading #finalHeading"
+        grid.getHeading() == finalHeading
+
+        where:
+        initialHeading | finalHeading
+        "N"            | "W"
+        "W"            | "S"
+        "S"            | "E"
+        "E"            | "N"
+    }
 }
