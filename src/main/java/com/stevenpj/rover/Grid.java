@@ -1,13 +1,33 @@
 package com.stevenpj.rover;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
+@Getter
+@AllArgsConstructor
 public class Grid {
 
+    private String heading;
+
     public String getPosition() {
-        throw new UnsupportedOperationException();
+        return "0:0:N";
     }
 
     public void turnRight() {
-        throw new UnsupportedOperationException();
+        switch (heading) {
+            case "N":
+                heading = "E";
+                break;
+            case "E":
+                heading = "S";
+                break;
+            case "S":
+                heading = "W";
+                break;
+            case "W":
+                heading = "N";
+                break;
+        }
     }
 
     public void turnLeft() {
