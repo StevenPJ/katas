@@ -18,7 +18,7 @@ class Grid {
     public Grid(Coordinate coordinate, Heading heading) {
         this.coordinate = coordinate;
         this.heading = heading;
-        this.obstacles = new Obstacles();
+        this.obstacles = new Obstacles(null);
     }
 
     public String getPosition() {
@@ -38,9 +38,7 @@ class Grid {
 
     public void moveForward() {
         Coordinate nextCoordinate = heading.getNext(coordinate);
-        if (obstacles.hasObstacleAt(nextCoordinate)) {
-            return;
-        };
+        if (obstacles.hasObstacleAt(nextCoordinate)) return;
         coordinate = nextCoordinate;
     }
 }

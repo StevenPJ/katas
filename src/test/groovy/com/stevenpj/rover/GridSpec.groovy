@@ -110,7 +110,6 @@ class GridSpec extends Specification {
 
         then: "it still reports the position where it hit the obstacle"
         grid.getPosition() == "O:0:0:N"
-        
     }
 
     static final Heading NORTH = new Heading.North()
