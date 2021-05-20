@@ -41,8 +41,8 @@ class RoverSpec extends Specification {
     }
 
     def "should stop once an obstacle is hit"() {
-        when: "the rover hits the obstacle at the end"
-        rover.execute("RLMM")
+        when: "the rover hits the obstacle"
+        def finalPosition = rover.execute("RLMMRLM")
 
         then:  "the rover turned right"
         1 * grid.turnRight()
@@ -54,9 +54,12 @@ class RoverSpec extends Specification {
         1 * grid.willHitObstacle() >> false
         1 * grid.moveForward()
 
-        then: "the rover reported the obstacle"
+        then: "the rover spotted the obstacle"
         1 * grid.willHitObstacle() >> true
-        1 * grid.reportObstacle()
+
+        then: "the rover reported the obstacle"
+        1 * grid.getPosition() >> "0:1:N"
+        finalPosition == "O:0:1:N"
 
         then: "no more interactions"
         0 * _

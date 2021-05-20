@@ -40,9 +40,5 @@ class Grid {
     public boolean willHitObstacle() {
         return obstacles.hasObstacleAt(heading.getNext(coordinate));
     }
-
-    public String reportObstacle() {
-        return obstacles.decoratePosition(this.getPosition());
-    }
 }
 

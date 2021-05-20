@@ -16,8 +16,4 @@ class Obstacles {
     boolean hasObstacleAt(Coordinate coordinate) {
         return this.coordinates.contains(coordinate);
     }
-
-    String decoratePosition(String position) {
-        return "O:" + position;
-    }
 }

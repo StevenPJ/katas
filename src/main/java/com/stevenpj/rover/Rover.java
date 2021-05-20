@@ -11,11 +11,13 @@ class Rover {
         for (char command : commands.toCharArray()) {
             if (command == 'R') grid.turnRight();
             if (command == 'L') grid.turnLeft();
-            if (command == 'M') {
-                if (grid.willHitObstacle()) return grid.reportObstacle();
-                grid.moveForward();
-            }
+            if (command == 'M' && grid.willHitObstacle()) return reportObstaclePosition();
+            if (command == 'M') grid.moveForward();
         }
         return grid.getPosition();
+    }
+
+    private String reportObstaclePosition() {
+        return String.format("O:%s", grid.getPosition());
     }
 }
